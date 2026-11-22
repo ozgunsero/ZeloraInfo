@@ -1,0 +1,199 @@
+<UserControl x:Class="ZeloraInfo.App.Views.BenchmarkView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ZeloraInfo.App.ViewModels">
+    <UserControl.Resources>
+        <Style x:Key="ResultTile" TargetType="Border">
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="16,10" />
+            <Setter Property="Margin" Value="6,0,0,0" />
+            <Setter Property="Background" Value="{DynamicResource Brush.CardAlt}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Brush.CardBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style x:Key="FieldLabel" TargetType="TextBlock" BasedOn="{StaticResource Text.Label}">
+            <Setter Property="Margin" Value="0,0,0,4" />
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="32,0,32,24">
+        <StackPanel>
+            <!-- Parameters -->
+            <Border Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2.2*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Bench.Target}" />
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Style="{StaticResource Button.Base}" Margin="8,0,0,0" Command="{Binding BrowseCommand}"
+                                    Content="{DynamicResource Common.Browse}" IsEnabled="{Binding IsIdle}" />
+                            <ComboBox ItemsSource="{Binding Drives}" DisplayMemberPath="Label" SelectedValuePath="Root"
+                                      SelectedValue="{Binding TargetPath}" IsEnabled="{Binding IsIdle}" />
+                        </DockPanel>
+                        <TextBlock Style="{StaticResource Text.Muted}" Margin="0,6,0,0">
+                            <Run Text="{Binding TargetPath, Mode=OneWay}" /><Run Text="   " /><Run Text="{Binding FreeSpaceText, Mode=OneWay}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Bench.TestSize}" />
+                        <ComboBox ItemsSource="{Binding TestSizes}" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                  SelectedValue="{Binding TestSizeMiB}" IsEnabled="{Binding IsIdle}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="4">
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Bench.Iterations}" />
+                        <ComboBox ItemsSource="{Binding IterationChoices}" SelectedItem="{Binding Iterations}" IsEnabled="{Binding IsIdle}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="6">
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Bench.Mode}" />
+                        <ComboBox ItemsSource="{Binding Modes}" DisplayMemberPath="Label" SelectedValuePath="Value"
+                                  SelectedValue="{Binding Mode}" IsEnabled="{Binding IsIdle}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Bench.Duration}" />
+                        <ComboBox ItemsSource="{Binding DurationChoices}" SelectedItem="{Binding DurationSeconds}" IsEnabled="{Binding IsIdle}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="4">
+                        <TextBlock Style="{StaticResource FieldLabel}" Text="{DynamicResource Bench.Interval}" />
+                        <ComboBox ItemsSource="{Binding IntervalChoices}" SelectedItem="{Binding IntervalSeconds}" IsEnabled="{Binding IsIdle}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom">
+                        <Button Style="{StaticResource Button.Primary}" Command="{Binding StartCommand}" MinWidth="150">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE768;" FontSize="13" />
+                                <TextBlock Margin="8,0,0,0" Text="{DynamicResource Bench.Start}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource Button.Danger}" Command="{Binding CancelCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE71A;" FontSize="13" />
+                                <TextBlock Margin="8,0,0,0" Text="{DynamicResource Bench.Cancel}" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Progress -->
+            <Border Style="{StaticResource Card}" Padding="18,12">
+                <StackPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Right" Style="{StaticResource Text.Muted}" Text="{Binding Progress, StringFormat={}{0:0} %}" />
+                        <TextBlock Text="{Binding StatusText}" FontSize="13" Foreground="{DynamicResource Brush.TextPrimary}" TextTrimming="CharacterEllipsis" />
+                    </DockPanel>
+                    <ProgressBar Style="{StaticResource ProgressBar.Slim}" Margin="0,8,0,0" Minimum="0" Maximum="100" Value="{Binding Progress}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Results -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <DockPanel Margin="0,0,0,10">
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" IsEnabled="{Binding HasResults}">
+                            <Button Style="{StaticResource Button.Base}" Command="{Binding CopyResultsCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE8C8;" FontSize="13" />
+                                    <TextBlock Margin="8,0,0,0" Text="{DynamicResource Bench.CopyResults}" />
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource Button.Base}" Command="{Binding ExportCommand}" CommandParameter="json" Content="JSON" />
+                            <Button Style="{StaticResource Button.Base}" Command="{Binding ExportCommand}" CommandParameter="csv" Content="CSV" />
+                            <Button Style="{StaticResource Button.Base}" Margin="0" Command="{Binding ExportCommand}" CommandParameter="txt" Content="TXT" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text.Section}" Margin="0" VerticalAlignment="Center" Text="{DynamicResource Bench.Results}" />
+                            <Button Style="{StaticResource Button.Link}" Margin="14,0,0,0" Command="{Binding ResetProfileCommand}"
+                                    Content="{DynamicResource Bench.ResetProfile}" IsEnabled="{Binding IsIdle}" />
+                        </StackPanel>
+                    </DockPanel>
+
+                    <!-- Column headers -->
+                    <Grid Margin="0,0,0,6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="230" />
+                            <ColumnDefinition Width="230" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Bench.Profile}" />
+                        <TextBlock Grid.Column="1" Margin="22,0,0,0" FontWeight="SemiBold" Foreground="{DynamicResource Brush.Read}">
+                            <Run Text="{DynamicResource Bench.Read}" /><Run Text=" (MB/s)" />
+                        </TextBlock>
+                        <TextBlock Grid.Column="2" Margin="22,0,0,0" FontWeight="SemiBold" Foreground="{DynamicResource Brush.Write}">
+                            <Run Text="{DynamicResource Bench.Write}" /><Run Text=" (MB/s)" />
+                        </TextBlock>
+                    </Grid>
+
+                    <ItemsControl ItemsSource="{Binding Rows}" Focusable="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:BenchmarkRowViewModel}">
+                                <Border x:Name="RowBorder" CornerRadius="10" Padding="10,8" Margin="0,0,0,8" BorderThickness="1"
+                                        BorderBrush="{DynamicResource Brush.CardBorder}" Background="Transparent">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="230" />
+                                            <ColumnDefinition Width="230" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Label}" FontSize="17" FontWeight="Bold" FontFamily="{StaticResource Font.Mono}"
+                                                       Foreground="{DynamicResource Brush.TextPrimary}" />
+                                            <StackPanel Orientation="Horizontal" Margin="0,6,0,0"
+                                                        IsEnabled="{Binding DataContext.IsIdle, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                                <ComboBox Width="150" ToolTip="{DynamicResource Bench.Access}"
+                                                          ItemsSource="{Binding DataContext.AccessChoices, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Access}" />
+                                                <ComboBox Width="104" Margin="6,0,0,0" ToolTip="{DynamicResource Bench.BlockSize}"
+                                                          ItemsSource="{Binding DataContext.BlockChoices, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding BlockSizeKiB}" />
+                                                <ComboBox Width="78" Margin="6,0,0,0" ToolTip="{DynamicResource Bench.QueueDepth}"
+                                                          ItemsSource="{Binding DataContext.QueueChoices, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          SelectedItem="{Binding QueueDepth}" ItemStringFormat="Q{0}" />
+                                                <ComboBox Width="72" Margin="6,0,0,0" ToolTip="{DynamicResource Bench.Threads}"
+                                                          ItemsSource="{Binding DataContext.ThreadChoices, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                          SelectedItem="{Binding Threads}" ItemStringFormat="T{0}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <Border Grid.Column="1" Style="{StaticResource ResultTile}">
+                                            <StackPanel HorizontalAlignment="Right">
+                                                <TextBlock Text="{Binding ReadMBps}" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource Brush.Read}" FontFamily="Segoe UI Variable Display, Segoe UI" />
+                                                <TextBlock Text="{Binding ReadDetail}" Style="{StaticResource Text.Muted}" HorizontalAlignment="Right" FontSize="11.5" />
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Grid.Column="2" Style="{StaticResource ResultTile}">
+                                            <StackPanel HorizontalAlignment="Right">
+                                                <TextBlock Text="{Binding WriteMBps}" FontSize="30" FontWeight="SemiBold" HorizontalAlignment="Right"
+                                                           Foreground="{DynamicResource Brush.Write}" FontFamily="Segoe UI Variable Display, Segoe UI" />
+                                                <TextBlock Text="{Binding WriteDetail}" Style="{StaticResource Text.Muted}" HorizontalAlignment="Right" FontSize="11.5" />
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                        <Setter TargetName="RowBorder" Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
+                                        <Setter TargetName="RowBorder" Property="Background" Value="{DynamicResource Brush.AccentSoft}" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Style="{StaticResource Text.Muted}" Margin="0,6,0,0" Text="{DynamicResource Bench.Note}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

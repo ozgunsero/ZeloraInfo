@@ -1,0 +1,41 @@
+<Window x:Class="ZeloraInfo.App.CloseDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Zelora Info"
+        Icon="pack://application:,,,/Assets/ZeloraInfo.ico"
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource Brush.Card}"
+        Foreground="{DynamicResource Brush.TextPrimary}"
+        FontFamily="Segoe UI Variable Text, Segoe UI">
+    <StackPanel Margin="26,24,26,20" MaxWidth="470">
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{StaticResource Brand.Icon}" Width="48" Height="48" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" />
+            <StackPanel Margin="16,0,0,0" MaxWidth="390">
+                <TextBlock Text="{DynamicResource Close.Title}" FontSize="17" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock Text="{DynamicResource Close.Message}" Margin="0,6,0,0" FontSize="13" TextWrapping="Wrap"
+                           Foreground="{DynamicResource Brush.TextSecondary}" />
+            </StackPanel>
+        </StackPanel>
+
+        <CheckBox x:Name="RememberBox" Margin="64,18,0,0" Content="{DynamicResource Close.Remember}" />
+        <TextBlock Margin="64,4,0,0" Text="{DynamicResource Close.RememberHint}" FontSize="11.5" TextWrapping="Wrap"
+                   Foreground="{DynamicResource Brush.TextMuted}" />
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,22,0,0">
+            <Button Style="{StaticResource Button.Primary}" Click="OnTray" IsDefault="True" AutomationProperties.Name="{DynamicResource Close.ToTray}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE921;" FontSize="13" />
+                    <TextBlock Margin="8,0,0,0" Text="{DynamicResource Close.ToTray}" />
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource Button.Danger}" Click="OnExit" AutomationProperties.Name="{DynamicResource Close.Exit}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE8BB;" FontSize="13" />
+                    <TextBlock Margin="8,0,0,0" Text="{DynamicResource Close.Exit}" />
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource Button.Base}" Margin="0" IsCancel="True" Content="{DynamicResource Common.Cancel}" />
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,38 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Sand — warm paper tones, espresso text and a terracotta accent (easy on the eyes) -->
+    <SolidColorBrush x:Key="Brush.PageBackground" Color="#F6F1E7" />
+    <SolidColorBrush x:Key="Brush.Sidebar" Color="#FBF8F2" />
+    <SolidColorBrush x:Key="Brush.SidebarBorder" Color="#E7DCC8" />
+    <SolidColorBrush x:Key="Brush.Card" Color="#FFFDF8" />
+    <SolidColorBrush x:Key="Brush.CardAlt" Color="#F3ECDD" />
+    <SolidColorBrush x:Key="Brush.CardBorder" Color="#E2D5BE" />
+    <SolidColorBrush x:Key="Brush.TextPrimary" Color="#2A1F14" />
+    <SolidColorBrush x:Key="Brush.TextSecondary" Color="#5C4B38" />
+    <SolidColorBrush x:Key="Brush.TextMuted" Color="#7D6B56" />
+    <SolidColorBrush x:Key="Brush.Accent" Color="#B4532A" />
+    <SolidColorBrush x:Key="Brush.AccentStrong" Color="#C2410C" />
+    <SolidColorBrush x:Key="Brush.AccentSoft" Color="#F9E3D3" />
+    <SolidColorBrush x:Key="Brush.OnAccent" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Brush.NavHover" Color="#F1E8D8" />
+    <SolidColorBrush x:Key="Brush.NavSelected" Color="#F6DFCC" />
+    <SolidColorBrush x:Key="Brush.Track" Color="#E8DDC9" />
+    <SolidColorBrush x:Key="Brush.BannerWarning" Color="#FDF1D8" />
+    <SolidColorBrush x:Key="Brush.BannerWarningBorder" Color="#D97706" />
+    <SolidColorBrush x:Key="Brush.BannerError" Color="#FBE4DF" />
+    <SolidColorBrush x:Key="Brush.BannerErrorBorder" Color="#B91C1C" />
+    <SolidColorBrush x:Key="Brush.BannerInfo" Color="#F4EBDD" />
+    <SolidColorBrush x:Key="Brush.BannerInfoBorder" Color="#B4532A" />
+    <SolidColorBrush x:Key="Brush.Toast" Color="#2A1F14" />
+    <SolidColorBrush x:Key="Brush.ToastText" Color="#FFFDF8" />
+    <SolidColorBrush x:Key="Brush.Good" Color="#3F7D20" />
+    <SolidColorBrush x:Key="Brush.Caution" Color="#B45309" />
+    <SolidColorBrush x:Key="Brush.Bad" Color="#B91C1C" />
+    <SolidColorBrush x:Key="Brush.Unknown" Color="#7D6B56" />
+    <SolidColorBrush x:Key="Brush.GoodSoft" Color="#E3EFD3" />
+    <SolidColorBrush x:Key="Brush.CautionSoft" Color="#FCEBC9" />
+    <SolidColorBrush x:Key="Brush.BadSoft" Color="#F9DCD6" />
+    <SolidColorBrush x:Key="Brush.UnknownSoft" Color="#EDE4D4" />
+    <SolidColorBrush x:Key="Brush.Read" Color="#0F766E" />
+    <SolidColorBrush x:Key="Brush.Write" Color="#B4532A" />
+</ResourceDictionary>

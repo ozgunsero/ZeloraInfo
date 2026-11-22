@@ -1,0 +1,87 @@
+<UserControl x:Class="ZeloraInfo.App.Views.ThirdPartyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:lic="clr-namespace:ZeloraInfo.Core.Licensing;assembly=ZeloraInfo.Core">
+    <Grid Margin="32,0,32,24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="340" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- List + search -->
+        <DockPanel>
+            <TextBox DockPanel.Dock="Top" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,6"
+                     AutomationProperties.Name="{DynamicResource Tp.Search}" ToolTip="{DynamicResource Tp.Search}" />
+            <TextBlock DockPanel.Dock="Top" Style="{StaticResource Text.Muted}" Text="{Binding CountText}" Margin="2,0,0,8" />
+            <Border Style="{StaticResource Banner.Error}" DockPanel.Dock="Top" Visibility="{Binding ErrorMessage, Converter={StaticResource NullToVisibility}}">
+                <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap" />
+            </Border>
+            <ListBox ItemsSource="{Binding Components}" SelectedItem="{Binding SelectedComponent}" Background="{DynamicResource Brush.Card}"
+                     BorderBrush="{DynamicResource Brush.CardBorder}" BorderThickness="1" Padding="4">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type lic:ThirdPartyComponent}">
+                        <StackPanel Margin="4,4">
+                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{DynamicResource Brush.TextPrimary}" />
+                            <TextBlock FontSize="12" Foreground="{DynamicResource Brush.TextSecondary}">
+                                <Run Text="{Binding Version, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding License, Mode=OneWay}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+
+        <!-- Details -->
+        <Border Grid.Column="2" Style="{StaticResource Card}" Margin="0">
+            <Grid>
+                <TextBlock Style="{StaticResource Text.Muted}" Text="{DynamicResource Tp.SelectHint}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Visibility="{Binding HasSelection, Converter={StaticResource InverseBoolToVisibility}}" />
+                <DockPanel Visibility="{Binding HasSelection, Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel DockPanel.Dock="Top">
+                        <TextBlock Text="{Binding SelectedComponent.Name}" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource Brush.TextPrimary}" />
+                        <TextBlock Style="{StaticResource Text.Muted}" FontSize="13" Margin="0,2,0,12">
+                            <Run Text="{Binding SelectedComponent.Version, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding SelectedComponent.License, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding SelectedScope, Mode=OneWay}" />
+                        </TextBlock>
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Col.Purpose}" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource Text.Value}" Text="{Binding SelectedPurpose}" />
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Tp.Copyright}" />
+                            <TextBlock Grid.Column="1" Style="{StaticResource Text.Value}" Text="{Binding SelectedComponent.Copyright}" />
+                        </Grid>
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Tp.Source}" />
+                            <Button Grid.Column="1" Style="{StaticResource Button.Link}" HorizontalAlignment="Left" Content="{Binding SelectedComponent.ProjectUrl}"
+                                    Command="{Binding OpenUrlCommand}" CommandParameter="{Binding SelectedComponent.ProjectUrl}" />
+                        </Grid>
+                        <Grid Margin="0,4,0,10">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="150" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Tp.LicenseUrl}" />
+                            <Button Grid.Column="1" Style="{StaticResource Button.Link}" HorizontalAlignment="Left" Content="{Binding SelectedComponent.LicenseUrl}"
+                                    Command="{Binding OpenUrlCommand}" CommandParameter="{Binding SelectedComponent.LicenseUrl}" />
+                        </Grid>
+                        <DockPanel Margin="0,0,0,8">
+                            <Button DockPanel.Dock="Right" Style="{StaticResource Button.Base}" Margin="0" Command="{Binding CopyLicenseCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE8C8;" FontSize="13" />
+                                    <TextBlock Margin="8,0,0,0" Text="{DynamicResource Tp.CopyLicense}" />
+                                </StackPanel>
+                            </Button>
+                            <TextBlock Style="{StaticResource Text.Section}" Margin="0" VerticalAlignment="Center" Text="{DynamicResource Tp.LicenseText}" />
+                        </DockPanel>
+                    </StackPanel>
+                    <Border CornerRadius="8" Background="{DynamicResource Brush.CardAlt}" BorderBrush="{DynamicResource Brush.CardBorder}" BorderThickness="1">
+                        <TextBox Text="{Binding SelectedComponent.LicenseText, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0"
+                                 Background="Transparent" Foreground="{DynamicResource Brush.TextPrimary}" Padding="16,12"
+                                 FontFamily="{StaticResource Font.Mono}" FontSize="12" VerticalScrollBarVisibility="Auto" />
+                    </Border>
+                </DockPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

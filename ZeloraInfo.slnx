@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ZeloraInfo.App/ZeloraInfo.App.csproj" />
+    <Project Path="src/ZeloraInfo.Core/ZeloraInfo.Core.csproj" />
+    <Project Path="src/ZeloraInfo.Infrastructure/ZeloraInfo.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ZeloraInfo.Tests/ZeloraInfo.Tests.csproj" />
+  </Folder>
+</Solution>

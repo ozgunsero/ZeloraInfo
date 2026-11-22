@@ -1,0 +1,17 @@
+Zelora Info
+Copyright 2026 Şero Teknoloji
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes third-party software; see third-party-licenses.json
+(also shown in the application under "Third-Party Licenses"):
+
+  - .NET Runtime, Windows Presentation Foundation, Windows Forms
+    Copyright (c) .NET Foundation and Contributors — MIT License
+  - CommunityToolkit.Mvvm
+    Copyright (c) .NET Foundation and Contributors — MIT License
+  - System.Management
+    Copyright (c) .NET Foundation and Contributors — MIT License
+
+"CrystalDiskInfo", "CrystalDiskMark" and "CPU-Z" are names of independent products of their
+respective owners. Zelora Info is not affiliated with them and contains none of their code.

@@ -1,0 +1,31 @@
+<UserControl x:Class="ZeloraInfo.App.Views.LicenseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="32,0,32,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+            <Button Style="{StaticResource Button.Primary}" Command="{Binding CopyCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE8C8;" FontSize="13" />
+                    <TextBlock Margin="8,0,0,0" Text="{DynamicResource Lic.Copy}" />
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource Button.Base}" Command="{Binding ExportCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE74E;" FontSize="13" />
+                    <TextBlock Margin="8,0,0,0" Text="{DynamicResource Lic.ExportTxt}" />
+                </StackPanel>
+            </Button>
+            <Button Style="{StaticResource Button.Link}" Command="{Binding OpenOnlineCommand}" Content="apache.org/licenses/LICENSE-2.0" />
+        </StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0" Padding="0">
+            <TextBox Text="{Binding LicenseText, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0"
+                     Background="Transparent" Foreground="{DynamicResource Brush.TextPrimary}" Padding="22,18"
+                     FontFamily="{StaticResource Font.Mono}" FontSize="12.5" VerticalScrollBarVisibility="Auto"
+                     AutomationProperties.Name="Apache License 2.0" />
+        </Border>
+    </Grid>
+</UserControl>

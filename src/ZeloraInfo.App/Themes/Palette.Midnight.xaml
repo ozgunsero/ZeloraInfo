@@ -1,0 +1,38 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Zelora Info palette — dark (high contrast text on deep slate surfaces) -->
+    <SolidColorBrush x:Key="Brush.PageBackground" Color="#0B1120" />
+    <SolidColorBrush x:Key="Brush.Sidebar" Color="#0F172A" />
+    <SolidColorBrush x:Key="Brush.SidebarBorder" Color="#1E293B" />
+    <SolidColorBrush x:Key="Brush.Card" Color="#111827" />
+    <SolidColorBrush x:Key="Brush.CardAlt" Color="#172033" />
+    <SolidColorBrush x:Key="Brush.CardBorder" Color="#243145" />
+    <SolidColorBrush x:Key="Brush.TextPrimary" Color="#F8FAFC" />
+    <SolidColorBrush x:Key="Brush.TextSecondary" Color="#A9B6C9" />
+    <SolidColorBrush x:Key="Brush.TextMuted" Color="#7C8BA1" />
+    <SolidColorBrush x:Key="Brush.Accent" Color="#38BDF8" />
+    <SolidColorBrush x:Key="Brush.AccentStrong" Color="#0EA5E9" />
+    <SolidColorBrush x:Key="Brush.AccentSoft" Color="#14304A" />
+    <SolidColorBrush x:Key="Brush.OnAccent" Color="#04121F" />
+    <SolidColorBrush x:Key="Brush.NavHover" Color="#1B2537" />
+    <SolidColorBrush x:Key="Brush.NavSelected" Color="#16324A" />
+    <SolidColorBrush x:Key="Brush.Track" Color="#1F2A3C" />
+    <SolidColorBrush x:Key="Brush.BannerWarning" Color="#3A2A0A" />
+    <SolidColorBrush x:Key="Brush.BannerWarningBorder" Color="#B45309" />
+    <SolidColorBrush x:Key="Brush.BannerError" Color="#3B1218" />
+    <SolidColorBrush x:Key="Brush.BannerErrorBorder" Color="#DC2626" />
+    <SolidColorBrush x:Key="Brush.BannerInfo" Color="#0F2A40" />
+    <SolidColorBrush x:Key="Brush.BannerInfoBorder" Color="#0284C7" />
+    <SolidColorBrush x:Key="Brush.Toast" Color="#E2E8F0" />
+    <SolidColorBrush x:Key="Brush.ToastText" Color="#0F172A" />
+    <SolidColorBrush x:Key="Brush.Good" Color="#22C55E" />
+    <SolidColorBrush x:Key="Brush.Caution" Color="#F59E0B" />
+    <SolidColorBrush x:Key="Brush.Bad" Color="#EF4444" />
+    <SolidColorBrush x:Key="Brush.Unknown" Color="#64748B" />
+    <SolidColorBrush x:Key="Brush.GoodSoft" Color="#0E2A1B" />
+    <SolidColorBrush x:Key="Brush.CautionSoft" Color="#33240A" />
+    <SolidColorBrush x:Key="Brush.BadSoft" Color="#361317" />
+    <SolidColorBrush x:Key="Brush.UnknownSoft" Color="#1C2433" />
+    <SolidColorBrush x:Key="Brush.Read" Color="#38BDF8" />
+    <SolidColorBrush x:Key="Brush.Write" Color="#A78BFA" />
+</ResourceDictionary>

@@ -1,0 +1,296 @@
+<UserControl x:Class="ZeloraInfo.App.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:ZeloraInfo.App.ViewModels">
+    <UserControl.Resources>
+        <Style x:Key="RowLabel" TargetType="TextBlock" BasedOn="{StaticResource Text.Value}">
+            <Setter Property="FontSize" Value="13.5" />
+        </Style>
+        <Style x:Key="RowHint" TargetType="TextBlock" BasedOn="{StaticResource Text.Muted}">
+            <Setter Property="FontSize" Value="11.5" />
+            <Setter Property="Margin" Value="0,2,0,0" />
+        </Style>
+        <Style x:Key="SettingRow" TargetType="Grid">
+            <Setter Property="Margin" Value="0,8" />
+        </Style>
+        <Style x:Key="SectionHeader" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="0,0,0,6" />
+        </Style>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+            <Setter Property="Margin" Value="0,6" />
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="32,0,32,24">
+        <StackPanel MaxWidth="1100" HorizontalAlignment="Stretch">
+
+            <!-- ===================== Appearance ===================== -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE790;" Foreground="{DynamicResource Brush.Accent}" Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource Text.Section}" Margin="0" Text="{DynamicResource Set.Appearance}" />
+                    </StackPanel>
+
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.Language}" />
+                            <TextBlock Style="{StaticResource RowHint}" Text="{DynamicResource Set.Language.Hint}" />
+                        </StackPanel>
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding Languages}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Language}" />
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource RowLabel}" Margin="0,10,0,2" Text="{DynamicResource Set.Theme}" />
+                    <TextBlock Style="{StaticResource RowHint}" Margin="0,0,0,10" Text="{DynamicResource Set.Theme.Hint}" />
+                    <ItemsControl ItemsSource="{Binding Themes}" Focusable="False">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><UniformGrid Columns="3" /></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:ThemeOption}">
+                                <Button x:Name="Card" Margin="0,0,10,10" Padding="0" Cursor="Hand"
+                                        HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch"
+                                        Command="{Binding DataContext.SelectThemeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}" AutomationProperties.Name="{Binding Name}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="Bd" CornerRadius="10" BorderThickness="2" BorderBrush="{DynamicResource Brush.CardBorder}"
+                                                    Background="{DynamicResource Brush.CardAlt}" Padding="10">
+                                                <ContentPresenter HorizontalAlignment="Stretch" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
+                                                </Trigger>
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                    <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Brush.AccentStrong}" />
+                                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Brush.NavSelected}" />
+                                                </DataTrigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                    <StackPanel>
+                                        <!-- Mini preview -->
+                                        <Border Height="74" CornerRadius="7" Background="{Binding Background}" Padding="8" ClipToBounds="True">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="34" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel>
+                                                    <Border Height="6" CornerRadius="3" Background="{Binding Accent}" Margin="0,0,6,6" />
+                                                    <Border Height="5" CornerRadius="2" Background="{Binding Text}" Opacity="0.45" Margin="0,0,10,5" />
+                                                    <Border Height="5" CornerRadius="2" Background="{Binding Text}" Opacity="0.45" Margin="0,0,6,5" />
+                                                    <Border Height="5" CornerRadius="2" Background="{Binding Text}" Opacity="0.45" Margin="0,0,12,0" />
+                                                </StackPanel>
+                                                <Border Grid.Column="1" CornerRadius="5" Background="{Binding Card}" Padding="7">
+                                                    <StackPanel>
+                                                        <Border Height="6" Width="60" HorizontalAlignment="Left" CornerRadius="3" Background="{Binding Text}" Margin="0,0,0,6" />
+                                                        <Border Height="5" Width="90" HorizontalAlignment="Left" CornerRadius="2" Background="{Binding Text}" Opacity="0.4" Margin="0,0,0,8" />
+                                                        <Border Height="12" Width="46" HorizontalAlignment="Left" CornerRadius="4" Background="{Binding Accent}" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                        <DockPanel Margin="2,8,2,0">
+                                            <TextBlock DockPanel.Dock="Right" Style="{StaticResource Text.Icon}" Text="&#xE73E;" FontSize="14"
+                                                       Foreground="{DynamicResource Brush.Accent}"
+                                                       Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibility}}" />
+                                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource Brush.TextPrimary}" />
+                                        </DockPanel>
+                                        <TextBlock Text="{Binding Description}" Style="{StaticResource RowHint}" Margin="2,2,2,0" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.UiScale}" />
+                            <TextBlock Style="{StaticResource RowHint}" Text="{DynamicResource Set.UiScale.Hint}" />
+                        </StackPanel>
+                        <DockPanel Grid.Column="1">
+                            <TextBlock DockPanel.Dock="Right" Width="50" TextAlignment="Right" VerticalAlignment="Center"
+                                       Text="{Binding UiScalePercent, StringFormat={}{0} %}" Foreground="{DynamicResource Brush.TextPrimary}" />
+                            <Slider Minimum="90" Maximum="130" TickFrequency="5" IsSnapToTickEnabled="True" TickPlacement="BottomRight"
+                                    Value="{Binding UiScalePercent, Delay=350}" VerticalAlignment="Center" />
+                        </DockPanel>
+                    </Grid>
+
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.StartPage}" />
+                            <TextBlock Style="{StaticResource RowHint}" Text="{DynamicResource Set.StartPage.Hint}" />
+                        </StackPanel>
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding StartPages}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding StartPage}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ===================== Behaviour ===================== -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE7E8;" Foreground="{DynamicResource Brush.Accent}" Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource Text.Section}" Margin="0" Text="{DynamicResource Set.Behavior}" />
+                    </StackPanel>
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.CloseAction}" />
+                            <TextBlock Style="{StaticResource RowHint}" Text="{DynamicResource Set.CloseAction.Hint}" />
+                        </StackPanel>
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding CloseActions}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding CloseAction}" />
+                    </Grid>
+                    <CheckBox IsChecked="{Binding MinimizeToTray}" Content="{DynamicResource Set.MinimizeToTray}" />
+                    <CheckBox IsChecked="{Binding StartWithWindows}" Content="{DynamicResource Set.StartWithWindows}" />
+                    <CheckBox IsChecked="{Binding StartMinimized}" Content="{DynamicResource Set.StartMinimized}" />
+                    <CheckBox IsChecked="{Binding AlwaysRunAsAdministrator}" Content="{DynamicResource Set.AlwaysAdmin}" />
+                    <TextBlock Style="{StaticResource RowHint}" Margin="28,0,0,6" Text="{DynamicResource Set.AlwaysAdmin.Hint}" />
+                    <Button Style="{StaticResource Button.Base}" HorizontalAlignment="Left" Margin="28,0,0,0" Command="{Binding RestartAsAdminCommand}"
+                            Visibility="{Binding IsAdministrator, Converter={StaticResource InverseBoolToVisibility}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE7EF;" FontSize="13" />
+                            <TextBlock Margin="8,0,0,0" Text="{DynamicResource Priv.RestartAsAdmin}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- ===================== Disk health ===================== -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource Text.Icon}" Text="&#xEDA2;" Foreground="{DynamicResource Brush.Accent}" Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource Text.Section}" Margin="0" Text="{DynamicResource Set.Smart}" />
+                    </StackPanel>
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.RefreshInterval}" />
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding SmartRefreshChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding SmartRefreshSeconds}" />
+                    </Grid>
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.TempUnit}" />
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding TemperatureUnits}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding TemperatureUnit}" />
+                    </Grid>
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.CautionTemp}" />
+                        <DockPanel Grid.Column="1">
+                            <TextBlock DockPanel.Dock="Right" Width="50" TextAlignment="Right" VerticalAlignment="Center" Text="{Binding CautionTemperatureC, StringFormat={}{0} °C}" Foreground="{DynamicResource Brush.Caution}" />
+                            <Slider Minimum="30" Maximum="99" IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding CautionTemperatureC, Delay=350}" VerticalAlignment="Center" />
+                        </DockPanel>
+                    </Grid>
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.CriticalTemp}" />
+                        <DockPanel Grid.Column="1">
+                            <TextBlock DockPanel.Dock="Right" Width="50" TextAlignment="Right" VerticalAlignment="Center" Text="{Binding CriticalTemperatureC, StringFormat={}{0} °C}" Foreground="{DynamicResource Brush.Bad}" />
+                            <Slider Minimum="31" Maximum="110" IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding CriticalTemperatureC, Delay=350}" VerticalAlignment="Center" />
+                        </DockPanel>
+                    </Grid>
+                    <CheckBox IsChecked="{Binding TreatReallocatedAsCaution}" Content="{DynamicResource Set.TreatReallocated}" />
+                </StackPanel>
+            </Border>
+
+            <!-- ===================== Hardware monitoring ===================== -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE950;" Foreground="{DynamicResource Brush.Accent}" Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource Text.Section}" Margin="0" Text="{DynamicResource Set.Hardware}" />
+                    </StackPanel>
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.LiveRefresh}" />
+                            <TextBlock Style="{StaticResource RowHint}" Text="{DynamicResource Set.LiveRefresh.Hint}" />
+                        </StackPanel>
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding LiveRefreshChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding LiveRefreshMs}" />
+                    </Grid>
+                    <Grid Style="{StaticResource SettingRow}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="300" /></Grid.ColumnDefinitions>
+                        <TextBlock Style="{StaticResource RowLabel}" Text="{DynamicResource Set.CpuBenchSeconds}" />
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding CpuBenchChoices}" SelectedItem="{Binding CpuBenchmarkSeconds}" ItemStringFormat="{}{0} s" />
+                    </Grid>
+                    <CheckBox IsChecked="{Binding MaskSerialNumbers}" Content="{DynamicResource Set.MaskSerials}" />
+                </StackPanel>
+            </Border>
+
+            <!-- ===================== Benchmark ===================== -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource Text.Icon}" Text="&#xEC4A;" Foreground="{DynamicResource Brush.Accent}" Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource Text.Section}" Margin="0" Text="{DynamicResource Set.Benchmark}" />
+                    </StackPanel>
+                    <UniformGrid Columns="5" Margin="0,4,0,8">
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Bench.TestSize}" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding TestSizes}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding BenchTestSizeMiB}" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Bench.Iterations}" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding IterationChoices}" SelectedItem="{Binding BenchIterations}" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Bench.Duration}" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding DurationChoices}" SelectedItem="{Binding BenchDuration}" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,10,0">
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Bench.Interval}" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding IntervalChoices}" SelectedItem="{Binding BenchInterval}" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Bench.Mode}" Margin="0,0,0,4" />
+                            <ComboBox ItemsSource="{Binding BenchmarkModes}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding BenchMode}" />
+                        </StackPanel>
+                    </UniformGrid>
+                    <TextBlock Style="{StaticResource RowLabel}" Margin="0,10,0,0" Text="{DynamicResource Set.Cleanup}" />
+                    <CheckBox IsChecked="{Binding DeleteTestFileAfterRun}" Content="{DynamicResource Set.DeleteAfterRun}" />
+                    <CheckBox IsChecked="{Binding CleanupOrphanedFilesOnStartup}" Content="{DynamicResource Set.CleanupOnStartup}" />
+                    <CheckBox IsChecked="{Binding WarnOnSystemDrive}" Content="{DynamicResource Set.WarnSystemDrive}" />
+                    <Button Style="{StaticResource Button.Base}" HorizontalAlignment="Left" Margin="0,8,0,0" Command="{Binding CleanupNowCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE74D;" FontSize="13" />
+                            <TextBlock Margin="8,0,0,0" Text="{DynamicResource Set.CleanupNow}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- ===================== Maintenance ===================== -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE90F;" Foreground="{DynamicResource Brush.Accent}" Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource Text.Section}" Margin="0" Text="{DynamicResource Set.Maintenance}" />
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource Text.Label}" Text="{DynamicResource Set.FilePath}" />
+                    <TextBox Style="{StaticResource Text.SelectableValue}" Text="{Binding SettingsFilePath, Mode=OneWay}" FontFamily="{StaticResource Font.Mono}" FontSize="12.5" Margin="0,4,0,10" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource Button.Base}" Command="{Binding OpenSettingsFolderCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE838;" FontSize="13" />
+                                <TextBlock Margin="8,0,0,0" Text="{DynamicResource Set.OpenFolder}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource Button.Danger}" Command="{Binding ResetDefaultsCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource Text.Icon}" Text="&#xE777;" FontSize="13" />
+                                <TextBlock Margin="8,0,0,0" Text="{DynamicResource Set.ResetDefaults}" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

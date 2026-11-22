@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>ZeloraInfo.App</RootNamespace>
+    <AssemblyName>ZeloraInfo</AssemblyName>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\ZeloraInfo.ico</ApplicationIcon>
+    <!-- WPF Fluent ThemeMode is marked experimental in .NET 9/10 -->
+    <!-- WPF0001: Fluent ThemeMode is experimental. WFO0003: DPI awareness is intentionally declared in app.manifest (WPF app). -->
+    <NoWarn>$(NoWarn);WPF0001;WFO0003</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ZeloraInfo.Core\ZeloraInfo.Core.csproj" />
+    <ProjectReference Include="..\ZeloraInfo.Infrastructure\ZeloraInfo.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\ZeloraInfo.ico" />
+    <Resource Include="Assets\ZeloraInfo.png" />
+    <Resource Include="Assets\ZeloraInfoLogo.png" />
+    <Resource Include="Assets\ZeloraInfoMark.png" />
+    <EmbeddedResource Include="..\..\LICENSE" Link="Legal\LICENSE.txt" LogicalName="ZeloraInfo.LICENSE.txt" />
+    <EmbeddedResource Include="..\..\third-party-licenses.json" Link="Legal\third-party-licenses.json" LogicalName="ZeloraInfo.third-party-licenses.json" />
+  </ItemGroup>
+
+</Project>
