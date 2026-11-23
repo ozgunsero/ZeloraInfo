@@ -28,6 +28,25 @@ public sealed class StatusToBrushConverter : IValueConverter
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => Binding.DoNothing;
 }
 
+/// <summary>Bytes (ulong/long/double) → "1.2 GiB" in the current UI culture.</summary>
+public sealed class BytesToTextConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        double? bytes = value switch
+        {
+            ulong u => u,
+            long l => l,
+            double d => d,
+            int i => i,
+            _ => null
+        };
+        return bytes is null ? "—" : Core.Formatting.ByteFormatter.FormatBinary(bytes.Value, 1, Core.Localization.LanguageCatalog.CurrentCulture);
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => Binding.DoNothing;
+}
+
 public sealed class InverseBoolConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is not true;

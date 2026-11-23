@@ -69,6 +69,16 @@ public interface ICpuZService
     Task<Hardware.CpuBenchmarkResult> RunBenchmarkAsync(TimeSpan durationPerPhase, IProgress<Hardware.CpuBenchmarkProgress>? progress, CancellationToken cancellationToken);
 }
 
+/// <summary>RAMMap-style view: page lists, standby priorities, consumers, processes, physical ranges and "empty" actions.</summary>
+public interface IMemoryMapService
+{
+    Hardware.MemoryMapSnapshot GetSnapshot();
+    IReadOnlyList<Hardware.MemoryProcessInfo> GetProcesses();
+    IReadOnlyList<Hardware.PhysicalRange> GetPhysicalRanges();
+    /// <summary>Requires administrator rights; enables the needed privileges itself.</summary>
+    Hardware.MemoryEmptyResult Empty(Hardware.MemoryEmptyAction action);
+}
+
 /// <summary>Graphics adapters: identity, memory, driver, DirectX 12 capabilities and live telemetry.</summary>
 public interface IGpuService
 {

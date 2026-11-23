@@ -41,8 +41,9 @@
 | **Sistem** | İşletim sistemi (ad, özellik güncellemesi, sürüm, yapı, mimari), bilgisayar/kullanıcı adı, çalışma süresi, son yeniden başlatma, UEFI/BIOS ve Güvenli Önyükleme, CPU (model, çekirdek/iş parçacığı, temel/anlık hız, canlı kullanım, önbellek), anakart & BIOS, ekran kartları (sürücü, tam 64-bit VRAM) |
 | **CPU Ayrıntı** | CPUID tabanlı kimlik (marka, kod adı, üretim süreci, soket, aile/model/stepping/genişletilmiş değerler, mikrokod), komut setleri (SSE…AVX-512, AVX-VNNI, FMA3, BMI1/2, AES, SHA, VT-x/AMD-V, x86-64, AMX…), hibrit P/E çekirdek sayısı, L1d/L1i/L2/L3 (boyut × adet, ilişkisellik, satır, paylaşım), canlı ortalama/maks frekans, çarpan, mantıksal işlemci başına frekans/kullanım, iptal edilebilir tek/çok çekirdek hızlı CPU testi, TXT/JSON rapor |
 | **GPU** | Tüm ekran kartları: model, üretici, tür (harici/tümleşik), mimari, çip, video BIOS, PCI kimliği · VRAM / ayrılmış / paylaşılan bellek · sürücü sürümü (NVIDIA için ör. 621.24), tarihi, sağlayıcı, WDDM sürümü, donanım hızlandırmalı GPU zamanlaması (HAGS) · DirectX 12: özellik seviyesi, Shader Model, DXR, mesh shader, VRS, kaynak bağlama, DirectX 12 Ultimate · PCIe azami / anlık bağlantı · canlı: GPU kullanımı, motor bazında kullanım (3D, Copy, Video Decode/Encode…), VRAM ve paylaşılan bellek kullanımı, sıcaklık, fan, güç, çekirdek ve bellek frekansı (sürücü bildiriyorsa) · TXT/JSON rapor |
-| **RAM** | Toplam/kullanılan/boş bellek, canlı kullanım %, commit, DIMM modülleri (kapasite, MT/s, DDR tipi, form faktör, üretici, parça no, seri, voltaj), slot sayısı ve azami kapasite, sayfa dosyası |
-| **RAM Ayrıntı** | Ham SMBIOS (tip 16/17) ile boş slotlar dahil tüm slotlar, bellek tipi, kanal modu (Single/Dual/Quad… — slot etiketlerinden çıkarım), DRAM frekansı ve etkin MT/s, ECC, rank, veri/toplam genişlik, min/maks/yapılandırılmış voltaj (VDD), zamanlamalar bölümü (bkz. [sınırlamalar](#sınırlamalar)), seri numarası maskeleme, TXT/JSON rapor |
+| **RAM › Genel bakış** | Toplam/kullanılan/boş bellek, canlı kullanım %, commit, DIMM modülleri (kapasite, MT/s, DDR tipi, form faktör, üretici, parça no, seri, voltaj), slot sayısı ve azami kapasite, sayfa dosyası |
+| **RAM › Bellek Haritası** (RAMMap benzeri) | Fiziksel bellek dağılımı (Kullanımda / Değiştirilmiş / Beklemede / Boş / Donanıma ayrılmış), sayfa listeleri (sıfırlanmış, boş, değiştirilmiş, yazılmayacak, bekleme, hatalı), bekleme listesi öncelikleri (yönetici modunda 0–7 + yeniden kullanım sayıları, aksi halde Reserve/Normal/Core grupları), etkin tüketiciler (işlem özel çalışma kümeleri, sistem önbelleği, sayfalı/sayfasız havuz, sürücüler, çekirdek kodu), commit ve sayılar, aranabilir/sıralanabilir işlem tablosu (çalışma kümesi, özel/paylaşılan ÇK, özel bayt, havuzlar, sayfa hatası), fiziksel bellek aralıkları, RAMMap "Empty" komutları (yönetici; onaylı) · TXT/JSON rapor |
+| **RAM › Ayrıntı / SPD** | Ham SMBIOS (tip 16/17) ile boş slotlar dahil tüm slotlar, bellek tipi, kanal modu (Single/Dual/Quad… — slot etiketlerinden çıkarım), DRAM frekansı ve etkin MT/s, ECC, rank, veri/toplam genişlik, min/maks/yapılandırılmış voltaj (VDD), zamanlamalar bölümü (bkz. [sınırlamalar](#sınırlamalar)), seri numarası maskeleme, TXT/JSON rapor |
 | **Ekran** | Tüm monitörler, birincil ekran, aktif ve önerilen (yerel) çözünürlük, yenileme hızı ve azami Hz, DPI / ölçekleme %, renk derinliği ve bit/kanal, HDR (destek/durum), fiziksel boyut ve diyagonal, en-boy oranı, yönlendirme, bağlantı tipi (HDMI/DP/eDP…), sanal masaüstü ve çalışma alanı koordinatları |
 | **Ayarlar** | Uygulamanın tüm seçenekleri tek ekranda: 6 dil, 5 tema + Windows'u izle, arayüz ölçeği, açılış sayfası, kapat (X) davranışı, tepsiye küçültme, Windows ile başlatma, her açılışta yönetici izni, S.M.A.R.T. yenileme/eşikler/birim, canlı yenileme aralığı, seri maskeleme, benchmark varsayılanları, geçici dosya temizliği, varsayılana sıfırlama |
 | **Hakkında** | Üç sekme: **Genel bakış** (sürüm/derleme/çalışma zamanı, Şero Teknoloji, Apache 2.0 özeti, 3. parti bileşen listesi) · **Apache 2.0 Lisansı** (tam metin, kopyala / .txt kaydet) · **3. Parti Lisanslar** (arama, ayrıntı, tam lisans metni, kopyalama) |
@@ -64,9 +65,9 @@ Ek olarak:
 |---|
 | ![GPU](docs/images/screenshots/gpu.png) |
 
-| RAM Ayrıntı | Ekran |
+| RAM › Bellek Haritası | Ekran |
 |---|---|
-| ![RAM](docs/images/screenshots/ram-details.png) | ![Display](docs/images/screenshots/display.png) |
+| ![Memory map](docs/images/screenshots/memory-map.png) | ![Display](docs/images/screenshots/display.png) |
 
 | Ayarlar — temalar (Aurora, English) | Gündüz teması |
 |---|---|
@@ -107,7 +108,8 @@ Uygulama **yönetici izni istemeden** (`asInvoker`) açılır ve gerekmeyen hiç
 | Disk listesi, model, kapasite, Windows sağlık durumu | Hayır | — |
 | S.M.A.R.T. öznitelikleri, sıcaklık, çalışma saati, okunan/yazılan (ATA & NVMe) | **Evet** | **Kısıtlı mod:** sarı uyarı + "Yönetici olarak yeniden başlat" butonu; değerler "—" ve nedeni gösterilir |
 | Disk benchmark | Hayır (hedef klasöre yazma izni yeterli) | — |
-| Sistem, Ekran, RAM, CPU Ayrıntı, RAM Ayrıntı, GPU (sensörler dahil) | Hayır | — |
+| Sistem, Ekran, RAM (Genel bakış, Ayrıntı / SPD, Bellek Haritası), CPU Ayrıntı, GPU (sensörler dahil) | Hayır | Bellek Haritası öncelikleri gruplanmış gösterir |
+| Bellek Haritası: 8 bekleme önceliği, sıfırlanmış/boş ayrımı, "Empty" komutları | **Evet** | Performans sayaçlarıyla gruplanmış görünüm; boşaltma butonları devre dışı |
 
 - Kenar çubuğundaki durum kutusu (**Yönetici modu / Kısıtlı mod**) yetkiyi her zaman gösterir.
 - **Ayarlar › Davranış › Her açılışta yönetici izni iste** seçeneğiyle uygulama her başlangıçta UAC ister; reddedilirse kısıtlı modda çalışmaya devam eder.
@@ -133,7 +135,8 @@ Zelora Info **çekirdek (ring-0) sürücüsü yüklemez**. Bu nedenle yalnızca 
 | Sistem | WMI (`Win32_OperatingSystem`, `Win32_Processor`, `Win32_BaseBoard`, `Win32_BIOS`, `Win32_VideoController`), kayıt defteri (`DisplayVersion`, `UBR`, GPU `qwMemorySize`, Secure Boot), `GetFirmwareType`, PDH (`% Processor Utility`, `% Processor Performance`) |
 | CPU Ayrıntı | `X86Base.CpuId` (CPUID 0, 1, 7, 7.1, 16h, 8000000xh), `GetLogicalProcessorInformationEx`, PDH mantıksal işlemci sayaçları, `CentralProcessor\0` mikrokod |
 | GPU | DXGI (`CreateDXGIFactory1`, `IDXGIAdapter1::GetDesc1`), D3D12 (`D3D12CreateDevice`, `CheckFeatureSupport`), WDDM çekirdek arayüzü `D3DKMTQueryAdapterInfo` (WDDM sürümü, HAGS, mimari/BIOS, sıcaklık, fan, güç, frekanslar — Görev Yöneticisi ile aynı kaynak), PDH `GPU Engine` / `GPU Adapter Memory`, sürücü sınıf anahtarı (kayıt defteri), `CM_Get_DevNode_Property` (PCIe bağlantı hızı/genişliği) |
-| RAM / RAM Ayrıntı | `GlobalMemoryStatusEx`, ham SMBIOS (`GetSystemFirmwareTable('RSMB')`, tip 16/17), `Win32_PhysicalMemory`, `Win32_PageFileUsage` |
+| Bellek Haritası | `NtQuerySystemInformation` (SystemMemoryListInformation — yönetici, SystemProcessInformation), `\Memory\*` PDH sayaçları, `GetPerformanceInfo`, `GetPhysicallyInstalledSystemMemory`, `HKLM\HARDWARE\RESOURCEMAP\…\Physical Memory` (REG_RESOURCE_LIST), boşaltma: `NtSetSystemInformation` (MemoryEmptyWorkingSets / FlushModifiedList / PurgeStandbyList / PurgeLowPriorityStandbyList) ve `SetSystemFileCacheSize(-1, -1)`; RAMMap'in sayfa bazında görünümleri (Use Counts, Physical Pages, File Summary) belgelenmemiş Superfetch sorgusu gerektirdiği için yoktur |
+| RAM / Ayrıntı / SPD | `GlobalMemoryStatusEx`, ham SMBIOS (`GetSystemFirmwareTable('RSMB')`, tip 16/17), `Win32_PhysicalMemory`, `Win32_PageFileUsage` |
 | Ekran | `EnumDisplayMonitors`, `EnumDisplaySettings`, `GetDpiForMonitor`, DisplayConfig API (ad, bağlantı, önerilen mod, HDR), `WmiMonitorBasicDisplayParams` |
 
 ## Ayarlar
@@ -227,6 +230,7 @@ Tam metin: [LICENSE](LICENSE) (uygulamada **Hakkında › Apache 2.0 Lisansı** 
 - **Disk Benchmark** — CrystalDiskMark-style SEQ/RND tests with configurable block size, queue depth, threads, size and iterations; unbuffered overlapped I/O; MB/s, IOPS, latency; cancel anytime; JSON/CSV/TXT export; guaranteed temp-file cleanup.
 - **System, Display, Memory** — OS, CPU, board, BIOS/UEFI, GPU; every monitor's resolution, refresh rate, DPI, HDR, size, connection; RAM usage, DIMMs and page file.
 - **GPU** — GPU-Z style view: identity, architecture, VBIOS, VRAM, driver / WDDM / HAGS, DirectX 12 feature level, shader model, DXR, mesh shaders, VRS, PCIe link, plus live utilization per engine, VRAM usage, temperature, fan, power and clocks (via the WDDM kernel interface, no driver needed).
+- **Memory Map** (RAM page tab, RAMMap style) — physical memory composition, page lists, standby priorities, active consumers, per-process working sets, physical ranges and RAMMap's "Empty" commands (admin).
 - **CPU Details / Memory Details** — CPUID identity, code name, instruction sets, hybrid cores, cache hierarchy, live per-core clocks, quick CPU score; SMBIOS slot/SPD view incl. empty slots, channel mode, rank, voltages. Values that would require a kernel driver (DRAM timings, XMP/EXPO, VID) are shown as N/A — never guessed.
 - **6 languages** (TR/EN/DE/FR/IT/ES), **5 themes** + follow Windows, system tray with page shortcuts, close-to-tray prompt, single instance, all options managed from **Settings**.
 

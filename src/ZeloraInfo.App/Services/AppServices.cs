@@ -34,6 +34,7 @@ public sealed class AppServices : IDisposable
         CpuZ = new CpuZService();
         RamZ = new RamZService(memory);
         Gpu = new GpuService();
+        MemoryMap = new MemoryMapService(Privileges);
         Localization = new LocalizationManager();
         Theme = new ThemeManager();
         Ui = new UiService();
@@ -51,6 +52,7 @@ public sealed class AppServices : IDisposable
     public ICpuZService CpuZ { get; }
     public IRamZService RamZ { get; }
     public IGpuService Gpu { get; }
+    public IMemoryMapService MemoryMap { get; }
     public LocalizationManager Localization { get; }
     public ThemeManager Theme { get; }
     public UiService Ui { get; }
@@ -62,6 +64,7 @@ public sealed class AppServices : IDisposable
         (SystemInfo as IDisposable)?.Dispose();
         (CpuZ as IDisposable)?.Dispose();
         (Gpu as IDisposable)?.Dispose();
+        (MemoryMap as IDisposable)?.Dispose();
     }
 }
 

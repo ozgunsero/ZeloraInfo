@@ -48,6 +48,16 @@ public partial class MemoryView : UserControl
     public MemoryView() => InitializeComponent();
 }
 
+public partial class MemoryOverviewView : UserControl
+{
+    public MemoryOverviewView() => InitializeComponent();
+}
+
+public partial class MemoryMapView : UserControl
+{
+    public MemoryMapView() => InitializeComponent();
+}
+
 public partial class CpuDetailsView : UserControl
 {
     public CpuDetailsView() => InitializeComponent();

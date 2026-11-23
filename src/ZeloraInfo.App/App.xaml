@@ -13,6 +13,7 @@
             <conv:InverseBoolConverter x:Key="InverseBool" />
             <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
             <conv:NullOrEmptyToVisibilityConverter x:Key="NullToVisibility" />
+            <conv:BytesToTextConverter x:Key="BytesToText" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

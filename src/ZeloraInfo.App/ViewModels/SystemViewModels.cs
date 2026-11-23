@@ -289,7 +289,8 @@ public sealed partial class DisplayViewModel : LivePageViewModel
 //  Memory
 // =====================================================================================
 
-public sealed partial class MemoryViewModel(AppServices services) : LivePageViewModel(services)
+/// <summary>"Overview" tab of the RAM page: live usage, DIMM modules and page file.</summary>
+public sealed partial class MemoryOverviewViewModel(AppServices services) : LivePageViewModel(services)
 {
     private MemorySnapshot? _snapshot;
 

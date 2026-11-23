@@ -43,11 +43,12 @@ internal static unsafe partial class GpuInterop
         try
         {
             var enumAdapters1 = (delegate* unmanaged[Stdcall]<IntPtr, uint, IntPtr*, int>)Vtbl(factory)[12];
+            var desc = stackalloc byte[312];
             for (uint i = 0; i < 16; i++)
             {
                 IntPtr adapter;
                 if (enumAdapters1(factory, i, &adapter) < 0) break; // DXGI_ERROR_NOT_FOUND
-                var desc = stackalloc byte[312];
+                new Span<byte>(desc, 312).Clear();
                 var getDesc1 = (delegate* unmanaged[Stdcall]<IntPtr, byte*, int>)Vtbl(adapter)[10];
                 if (getDesc1(adapter, desc) < 0)
                 {

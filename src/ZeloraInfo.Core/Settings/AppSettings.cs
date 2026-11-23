@@ -73,6 +73,7 @@ public sealed class AppSettings
         if (!Enum.IsDefined(General.Theme)) General.Theme = AppTheme.Midnight;
         if (!Enum.IsDefined(General.CloseAction)) General.CloseAction = CloseAction.Ask;
         General.UiScalePercent = Math.Clamp(General.UiScalePercent, 90, 130);
+        if (General.StartPage == "RamDetails") General.StartPage = "Memory"; // merged into the RAM page (1.0.3)
         if (!GeneralSettings.StartPages.Contains(General.StartPage)) General.StartPage = "DiskHealth";
 
         Smart.RefreshIntervalSeconds = Math.Clamp(Smart.RefreshIntervalSeconds, 0, 3600);
@@ -107,7 +108,7 @@ public sealed class GeneralSettings
     /// <summary>Ask for elevation (UAC) on every launch so S.M.A.R.T. is always available.</summary>
     public bool AlwaysRunAsAdministrator { get; set; }
 
-    public static readonly string[] StartPages = ["DiskHealth", "Benchmark", "System", "CpuDetails", "Gpu", "Memory", "RamDetails", "Display"];
+    public static readonly string[] StartPages = ["DiskHealth", "Benchmark", "System", "CpuDetails", "Gpu", "Memory", "Display"];
 }
 
 public sealed class SmartSettings
