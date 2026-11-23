@@ -53,6 +53,11 @@ public partial class CpuDetailsView : UserControl
     public CpuDetailsView() => InitializeComponent();
 }
 
+public partial class GpuView : UserControl
+{
+    public GpuView() => InitializeComponent();
+}
+
 public partial class RamDetailsView : UserControl
 {
     public RamDetailsView() => InitializeComponent();

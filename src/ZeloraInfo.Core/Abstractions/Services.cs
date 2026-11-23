@@ -69,6 +69,14 @@ public interface ICpuZService
     Task<Hardware.CpuBenchmarkResult> RunBenchmarkAsync(TimeSpan durationPerPhase, IProgress<Hardware.CpuBenchmarkProgress>? progress, CancellationToken cancellationToken);
 }
 
+/// <summary>Graphics adapters: identity, memory, driver, DirectX 12 capabilities and live telemetry.</summary>
+public interface IGpuService
+{
+    Task<IReadOnlyList<Hardware.GpuAdapterInfo>> GetAdaptersAsync(CancellationToken cancellationToken = default);
+    /// <summary>One sample per adapter LUID (utilization, engines, memory, sensors where the driver reports them).</summary>
+    IReadOnlyList<Hardware.GpuLiveSample> SampleLive();
+}
+
 /// <summary>Memory controller summary, timings (where readable) and SMBIOS slot / module details.</summary>
 public interface IRamZService
 {

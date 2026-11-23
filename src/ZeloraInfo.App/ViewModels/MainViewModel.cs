@@ -61,6 +61,7 @@ public sealed partial class MainViewModel : ObservableObject
             [
                 new NavItem("System", "", () => new SystemViewModel(services)),
                 new NavItem("CpuDetails", "", () => new CpuDetailsViewModel(services)),
+                new NavItem("Gpu", "", () => new GpuViewModel(services)),
                 new NavItem("Memory", "", () => new MemoryViewModel(services)),
                 new NavItem("RamDetails", "", () => new RamDetailsViewModel(services)),
                 new NavItem("Display", "", () => new DisplayViewModel(services)),

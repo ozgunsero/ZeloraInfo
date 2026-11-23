@@ -8,6 +8,7 @@ using ZeloraInfo.Core.Licensing;
 using ZeloraInfo.Infrastructure.Benchmark;
 using ZeloraInfo.Infrastructure.Cpu;
 using ZeloraInfo.Infrastructure.Disks;
+using ZeloraInfo.Infrastructure.Gpu;
 using ZeloraInfo.Infrastructure.Memory;
 using ZeloraInfo.Infrastructure.Platform;
 using ZeloraInfo.Infrastructure.Settings;
@@ -32,6 +33,7 @@ public sealed class AppServices : IDisposable
         Memory = memory;
         CpuZ = new CpuZService();
         RamZ = new RamZService(memory);
+        Gpu = new GpuService();
         Localization = new LocalizationManager();
         Theme = new ThemeManager();
         Ui = new UiService();
@@ -48,6 +50,7 @@ public sealed class AppServices : IDisposable
     public IMemoryInfoService Memory { get; }
     public ICpuZService CpuZ { get; }
     public IRamZService RamZ { get; }
+    public IGpuService Gpu { get; }
     public LocalizationManager Localization { get; }
     public ThemeManager Theme { get; }
     public UiService Ui { get; }
@@ -58,6 +61,7 @@ public sealed class AppServices : IDisposable
         Tray.Dispose();
         (SystemInfo as IDisposable)?.Dispose();
         (CpuZ as IDisposable)?.Dispose();
+        (Gpu as IDisposable)?.Dispose();
     }
 }
 

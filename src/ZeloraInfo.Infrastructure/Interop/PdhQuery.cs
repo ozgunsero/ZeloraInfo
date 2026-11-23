@@ -43,6 +43,36 @@ internal sealed partial class PdhQuery : IDisposable
         return value.CStatus is 0 or 1 ? value.DoubleValue : null;
     }
 
+    /// <summary>Reads every instance of a wildcard counter, e.g. <c>\GPU Engine(*)\Utilization Percentage</c>.</summary>
+    public List<(string Instance, double Value)> ReadArray(string path)
+    {
+        var result = new List<(string, double)>();
+        if (!_counters.TryGetValue(path, out var counter)) return result;
+        const uint PDH_FMT_DOUBLE = 0x00000200, PDH_FMT_NOCAP100 = 0x00008000, PDH_MORE_DATA = 0x800007D2;
+        uint size = 0;
+        var status = PdhGetFormattedCounterArray(counter, PDH_FMT_DOUBLE | PDH_FMT_NOCAP100, ref size, out _, IntPtr.Zero);
+        if (status != PDH_MORE_DATA || size == 0) return result;
+        var buffer = Marshal.AllocHGlobal((int)size);
+        try
+        {
+            if (PdhGetFormattedCounterArray(counter, PDH_FMT_DOUBLE | PDH_FMT_NOCAP100, ref size, out var count, buffer) != 0) return result;
+            // PDH_FMT_COUNTERVALUE_ITEM_W (x64): LPWSTR szName; PDH_FMT_COUNTERVALUE { DWORD CStatus; double value } → 24 bytes
+            for (var i = 0; i < count; i++)
+            {
+                var item = buffer + i * 24;
+                var name = Marshal.PtrToStringUni(Marshal.ReadIntPtr(item)) ?? "";
+                var cstatus = (uint)Marshal.ReadInt32(item, 8);
+                if (cstatus is 0 or 1)
+                    result.Add((name, BitConverter.Int64BitsToDouble(Marshal.ReadInt64(item, 16))));
+            }
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(buffer);
+        }
+        return result;
+    }
+
     public void Dispose()
     {
         if (_query != IntPtr.Zero)
@@ -73,4 +103,7 @@ internal sealed partial class PdhQuery : IDisposable
 
     [LibraryImport("pdh.dll")]
     private static partial uint PdhCloseQuery(IntPtr query);
+
+    [LibraryImport("pdh.dll", EntryPoint = "PdhGetFormattedCounterArrayW")]
+    private static partial uint PdhGetFormattedCounterArray(IntPtr counter, uint format, ref uint bufferSize, out uint itemCount, IntPtr itemBuffer);
 }

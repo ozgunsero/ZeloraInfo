@@ -20,6 +20,7 @@
         <DataTemplate DataType="{x:Type vm:MemoryViewModel}"><views:MemoryView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:CpuDetailsViewModel}"><views:CpuDetailsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:RamDetailsViewModel}"><views:RamDetailsView /></DataTemplate>
+        <DataTemplate DataType="{x:Type vm:GpuViewModel}"><views:GpuView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:SettingsViewModel}"><views:SettingsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:AboutViewModel}"><views:AboutView /></DataTemplate>
     </Window.Resources>

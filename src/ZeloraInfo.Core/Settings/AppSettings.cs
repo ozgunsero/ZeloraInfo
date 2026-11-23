@@ -107,7 +107,7 @@ public sealed class GeneralSettings
     /// <summary>Ask for elevation (UAC) on every launch so S.M.A.R.T. is always available.</summary>
     public bool AlwaysRunAsAdministrator { get; set; }
 
-    public static readonly string[] StartPages = ["DiskHealth", "Benchmark", "System", "CpuDetails", "Memory", "RamDetails", "Display"];
+    public static readonly string[] StartPages = ["DiskHealth", "Benchmark", "System", "CpuDetails", "Gpu", "Memory", "RamDetails", "Display"];
 }
 
 public sealed class SmartSettings

@@ -40,6 +40,7 @@
 | **Disk Benchmark** | Sürücü/klasör seçimi, `SEQ` / `RND` testleri, blok boyutu (4 KiB – 8 MiB), kuyruk derinliği (Q1–Q128), iş parçacığı (T1–T16), test boyutu (16 MiB – 64 GiB), tekrar, ölçüm süresi, canlı ilerleme ve iptal, MB/s + IOPS + ortalama gecikme, panoya kopyalama ve JSON / CSV / TXT dışa aktarma, sistem diski uyarısı, geçici dosyaların her durumda temizlenmesi |
 | **Sistem** | İşletim sistemi (ad, özellik güncellemesi, sürüm, yapı, mimari), bilgisayar/kullanıcı adı, çalışma süresi, son yeniden başlatma, UEFI/BIOS ve Güvenli Önyükleme, CPU (model, çekirdek/iş parçacığı, temel/anlık hız, canlı kullanım, önbellek), anakart & BIOS, ekran kartları (sürücü, tam 64-bit VRAM) |
 | **CPU Ayrıntı** | CPUID tabanlı kimlik (marka, kod adı, üretim süreci, soket, aile/model/stepping/genişletilmiş değerler, mikrokod), komut setleri (SSE…AVX-512, AVX-VNNI, FMA3, BMI1/2, AES, SHA, VT-x/AMD-V, x86-64, AMX…), hibrit P/E çekirdek sayısı, L1d/L1i/L2/L3 (boyut × adet, ilişkisellik, satır, paylaşım), canlı ortalama/maks frekans, çarpan, mantıksal işlemci başına frekans/kullanım, iptal edilebilir tek/çok çekirdek hızlı CPU testi, TXT/JSON rapor |
+| **GPU** | Tüm ekran kartları: model, üretici, tür (harici/tümleşik), mimari, çip, video BIOS, PCI kimliği · VRAM / ayrılmış / paylaşılan bellek · sürücü sürümü (NVIDIA için ör. 621.24), tarihi, sağlayıcı, WDDM sürümü, donanım hızlandırmalı GPU zamanlaması (HAGS) · DirectX 12: özellik seviyesi, Shader Model, DXR, mesh shader, VRS, kaynak bağlama, DirectX 12 Ultimate · PCIe azami / anlık bağlantı · canlı: GPU kullanımı, motor bazında kullanım (3D, Copy, Video Decode/Encode…), VRAM ve paylaşılan bellek kullanımı, sıcaklık, fan, güç, çekirdek ve bellek frekansı (sürücü bildiriyorsa) · TXT/JSON rapor |
 | **RAM** | Toplam/kullanılan/boş bellek, canlı kullanım %, commit, DIMM modülleri (kapasite, MT/s, DDR tipi, form faktör, üretici, parça no, seri, voltaj), slot sayısı ve azami kapasite, sayfa dosyası |
 | **RAM Ayrıntı** | Ham SMBIOS (tip 16/17) ile boş slotlar dahil tüm slotlar, bellek tipi, kanal modu (Single/Dual/Quad… — slot etiketlerinden çıkarım), DRAM frekansı ve etkin MT/s, ECC, rank, veri/toplam genişlik, min/maks/yapılandırılmış voltaj (VDD), zamanlamalar bölümü (bkz. [sınırlamalar](#sınırlamalar)), seri numarası maskeleme, TXT/JSON rapor |
 | **Ekran** | Tüm monitörler, birincil ekran, aktif ve önerilen (yerel) çözünürlük, yenileme hızı ve azami Hz, DPI / ölçekleme %, renk derinliği ve bit/kanal, HDR (destek/durum), fiziksel boyut ve diyagonal, en-boy oranı, yönlendirme, bağlantı tipi (HDMI/DP/eDP…), sanal masaüstü ve çalışma alanı koordinatları |
@@ -58,6 +59,10 @@ Ek olarak:
 | Disk Benchmark | CPU Ayrıntı |
 |---|---|
 | ![Benchmark](docs/images/screenshots/benchmark.png) | ![CPU](docs/images/screenshots/cpu-details.png) |
+
+| GPU |
+|---|
+| ![GPU](docs/images/screenshots/gpu.png) |
 
 | RAM Ayrıntı | Ekran |
 |---|---|
@@ -102,7 +107,7 @@ Uygulama **yönetici izni istemeden** (`asInvoker`) açılır ve gerekmeyen hiç
 | Disk listesi, model, kapasite, Windows sağlık durumu | Hayır | — |
 | S.M.A.R.T. öznitelikleri, sıcaklık, çalışma saati, okunan/yazılan (ATA & NVMe) | **Evet** | **Kısıtlı mod:** sarı uyarı + "Yönetici olarak yeniden başlat" butonu; değerler "—" ve nedeni gösterilir |
 | Disk benchmark | Hayır (hedef klasöre yazma izni yeterli) | — |
-| Sistem, Ekran, RAM, CPU Ayrıntı, RAM Ayrıntı | Hayır | — |
+| Sistem, Ekran, RAM, CPU Ayrıntı, RAM Ayrıntı, GPU (sensörler dahil) | Hayır | — |
 
 - Kenar çubuğundaki durum kutusu (**Yönetici modu / Kısıtlı mod**) yetkiyi her zaman gösterir.
 - **Ayarlar › Davranış › Her açılışta yönetici izni iste** seçeneğiyle uygulama her başlangıçta UAC ister; reddedilirse kısıtlı modda çalışmaya devam eder.
@@ -127,6 +132,7 @@ Zelora Info **çekirdek (ring-0) sürücüsü yüklemez**. Bu nedenle yalnızca 
 | Benchmark | `FILE_FLAG_NO_BUFFERING` + `WRITE_THROUGH`, örtüşen G/Ç (IOCP), sayfa hizalı bellek, sıkıştırılamaz rastgele veri; her test için en iyi tur raporlanır (MB/s = 10⁶ B/s) |
 | Sistem | WMI (`Win32_OperatingSystem`, `Win32_Processor`, `Win32_BaseBoard`, `Win32_BIOS`, `Win32_VideoController`), kayıt defteri (`DisplayVersion`, `UBR`, GPU `qwMemorySize`, Secure Boot), `GetFirmwareType`, PDH (`% Processor Utility`, `% Processor Performance`) |
 | CPU Ayrıntı | `X86Base.CpuId` (CPUID 0, 1, 7, 7.1, 16h, 8000000xh), `GetLogicalProcessorInformationEx`, PDH mantıksal işlemci sayaçları, `CentralProcessor\0` mikrokod |
+| GPU | DXGI (`CreateDXGIFactory1`, `IDXGIAdapter1::GetDesc1`), D3D12 (`D3D12CreateDevice`, `CheckFeatureSupport`), WDDM çekirdek arayüzü `D3DKMTQueryAdapterInfo` (WDDM sürümü, HAGS, mimari/BIOS, sıcaklık, fan, güç, frekanslar — Görev Yöneticisi ile aynı kaynak), PDH `GPU Engine` / `GPU Adapter Memory`, sürücü sınıf anahtarı (kayıt defteri), `CM_Get_DevNode_Property` (PCIe bağlantı hızı/genişliği) |
 | RAM / RAM Ayrıntı | `GlobalMemoryStatusEx`, ham SMBIOS (`GetSystemFirmwareTable('RSMB')`, tip 16/17), `Win32_PhysicalMemory`, `Win32_PageFileUsage` |
 | Ekran | `EnumDisplayMonitors`, `EnumDisplaySettings`, `GetDpiForMonitor`, DisplayConfig API (ad, bağlantı, önerilen mod, HDR), `WmiMonitorBasicDisplayParams` |
 
@@ -220,6 +226,7 @@ Tam metin: [LICENSE](LICENSE) (uygulamada **Hakkında › Apache 2.0 Lisansı** 
 - **Disk Health** — S.M.A.R.T. for ATA/SATA and NVMe (health, life, temperature, host reads/writes, power-on hours/count, full attribute table, threshold & temperature alerts).
 - **Disk Benchmark** — CrystalDiskMark-style SEQ/RND tests with configurable block size, queue depth, threads, size and iterations; unbuffered overlapped I/O; MB/s, IOPS, latency; cancel anytime; JSON/CSV/TXT export; guaranteed temp-file cleanup.
 - **System, Display, Memory** — OS, CPU, board, BIOS/UEFI, GPU; every monitor's resolution, refresh rate, DPI, HDR, size, connection; RAM usage, DIMMs and page file.
+- **GPU** — GPU-Z style view: identity, architecture, VBIOS, VRAM, driver / WDDM / HAGS, DirectX 12 feature level, shader model, DXR, mesh shaders, VRS, PCIe link, plus live utilization per engine, VRAM usage, temperature, fan, power and clocks (via the WDDM kernel interface, no driver needed).
 - **CPU Details / Memory Details** — CPUID identity, code name, instruction sets, hybrid cores, cache hierarchy, live per-core clocks, quick CPU score; SMBIOS slot/SPD view incl. empty slots, channel mode, rank, voltages. Values that would require a kernel driver (DRAM timings, XMP/EXPO, VID) are shown as N/A — never guessed.
 - **6 languages** (TR/EN/DE/FR/IT/ES), **5 themes** + follow Windows, system tray with page shortcuts, close-to-tray prompt, single instance, all options managed from **Settings**.
 
