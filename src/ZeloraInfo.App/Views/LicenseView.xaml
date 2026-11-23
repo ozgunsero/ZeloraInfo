@@ -1,7 +1,8 @@
 <UserControl x:Class="ZeloraInfo.App.Views.LicenseView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid Margin="32,0,32,24">
+    <!-- Hosted as a tab of the About page -->
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

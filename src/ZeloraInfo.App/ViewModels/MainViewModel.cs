@@ -68,9 +68,7 @@ public sealed partial class MainViewModel : ObservableObject
             new NavGroup("Nav.Group.App",
             [
                 new NavItem("Settings", "", () => new SettingsViewModel(services)),
-                new NavItem("About", "", () => new AboutViewModel(services, Navigate)),
-                new NavItem("License", "", () => new LicenseViewModel(services)),
-                new NavItem("ThirdParty", "", () => new ThirdPartyViewModel(services)),
+                new NavItem("About", "", () => new AboutViewModel(services)),
             ]),
         ];
 

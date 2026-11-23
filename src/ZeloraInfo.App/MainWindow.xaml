@@ -22,8 +22,6 @@
         <DataTemplate DataType="{x:Type vm:RamDetailsViewModel}"><views:RamDetailsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:SettingsViewModel}"><views:SettingsView /></DataTemplate>
         <DataTemplate DataType="{x:Type vm:AboutViewModel}"><views:AboutView /></DataTemplate>
-        <DataTemplate DataType="{x:Type vm:LicenseViewModel}"><views:LicenseView /></DataTemplate>
-        <DataTemplate DataType="{x:Type vm:ThirdPartyViewModel}"><views:ThirdPartyView /></DataTemplate>
     </Window.Resources>
 
     <Grid x:Name="Root">

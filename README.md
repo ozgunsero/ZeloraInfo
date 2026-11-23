@@ -44,7 +44,7 @@
 | **RAM Ayrıntı** | Ham SMBIOS (tip 16/17) ile boş slotlar dahil tüm slotlar, bellek tipi, kanal modu (Single/Dual/Quad… — slot etiketlerinden çıkarım), DRAM frekansı ve etkin MT/s, ECC, rank, veri/toplam genişlik, min/maks/yapılandırılmış voltaj (VDD), zamanlamalar bölümü (bkz. [sınırlamalar](#sınırlamalar)), seri numarası maskeleme, TXT/JSON rapor |
 | **Ekran** | Tüm monitörler, birincil ekran, aktif ve önerilen (yerel) çözünürlük, yenileme hızı ve azami Hz, DPI / ölçekleme %, renk derinliği ve bit/kanal, HDR (destek/durum), fiziksel boyut ve diyagonal, en-boy oranı, yönlendirme, bağlantı tipi (HDMI/DP/eDP…), sanal masaüstü ve çalışma alanı koordinatları |
 | **Ayarlar** | Uygulamanın tüm seçenekleri tek ekranda: 6 dil, 5 tema + Windows'u izle, arayüz ölçeği, açılış sayfası, kapat (X) davranışı, tepsiye küçültme, Windows ile başlatma, her açılışta yönetici izni, S.M.A.R.T. yenileme/eşikler/birim, canlı yenileme aralığı, seri maskeleme, benchmark varsayılanları, geçici dosya temizliği, varsayılana sıfırlama |
-| **Hakkında & Lisanslar** | Sürüm/derleme/çalışma zamanı, Şero Teknoloji, Apache 2.0 özeti ve tam metin ekranı (kopyala / .txt kaydet), 3. parti lisanslar ekranı (arama, ayrıntı, tam lisans metni, kopyalama) |
+| **Hakkında** | Üç sekme: **Genel bakış** (sürüm/derleme/çalışma zamanı, Şero Teknoloji, Apache 2.0 özeti, 3. parti bileşen listesi) · **Apache 2.0 Lisansı** (tam metin, kopyala / .txt kaydet) · **3. Parti Lisanslar** (arama, ayrıntı, tam lisans metni, kopyalama) |
 
 Ek olarak:
 
@@ -67,9 +67,13 @@ Ek olarak:
 |---|---|
 | ![Settings](docs/images/screenshots/settings-themes.png) | ![Daylight](docs/images/screenshots/theme-daylight.png) |
 
-| Hakkında | Kapatma penceresi |
+| Hakkında › Genel bakış | Hakkında › 3. Parti Lisanslar |
 |---|---|
-| ![About](docs/images/screenshots/about.png) | ![Close](docs/images/screenshots/close-dialog.png) |
+| ![About](docs/images/screenshots/about.png) | ![Third-party](docs/images/screenshots/about-third-party.png) |
+
+| Kapatma penceresi |
+|---|
+| ![Close](docs/images/screenshots/close-dialog.png) |
 
 ## Kurulum
 
@@ -191,9 +195,9 @@ you may not use this software except in compliance with the License.
 You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 ```
 
-Tam metin: [LICENSE](LICENSE) (uygulamada **Apache 2.0 Lisansı** ekranı). Atıf bildirimleri: [NOTICE](NOTICE).
+Tam metin: [LICENSE](LICENSE) (uygulamada **Hakkında › Apache 2.0 Lisansı** sekmesi). Atıf bildirimleri: [NOTICE](NOTICE).
 
-3. parti bileşenler [`third-party-licenses.json`](third-party-licenses.json) manifestinde tutulur ve uygulamadaki **3. Parti Lisanslar** ekranında aranabilir şekilde, tam lisans metinleriyle gösterilir:
+3. parti bileşenler [`third-party-licenses.json`](third-party-licenses.json) manifestinde tutulur ve uygulamadaki **Hakkında › 3. Parti Lisanslar** sekmesinde aranabilir şekilde, tam lisans metinleriyle gösterilir:
 
 | Bileşen | Sürüm | Lisans | Kapsam |
 |---|---|---|---|

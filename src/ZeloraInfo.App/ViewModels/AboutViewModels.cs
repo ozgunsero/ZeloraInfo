@@ -10,15 +10,22 @@ using ZeloraInfo.Core.Localization;
 
 namespace ZeloraInfo.App.ViewModels;
 
+/// <summary>
+/// About page with three tabs: overview, the full Apache 2.0 license and the third-party licenses.
+/// </summary>
 public sealed partial class AboutViewModel : ViewModelBase
 {
-    private readonly AppServices _services;
-    private readonly Action<string> _navigate;
+    public const int OverviewTab = 0;
+    public const int LicenseTab = 1;
+    public const int ThirdPartyTab = 2;
 
-    public AboutViewModel(AppServices services, Action<string> navigate)
+    private readonly AppServices _services;
+
+    public AboutViewModel(AppServices services)
     {
         _services = services;
-        _navigate = navigate;
+        License = new LicenseViewModel(services);
+        ThirdParty = new ThirdPartyViewModel(services);
         try
         {
             Components = AppInfo.LoadThirdPartyManifest().Components;
@@ -36,7 +43,11 @@ public sealed partial class AboutViewModel : ViewModelBase
     public IReadOnlyList<ThirdPartyComponent> Components { get; }
     public string Copyright => "Copyright 2026 Şero Teknoloji";
 
+    public LicenseViewModel License { get; }
+    public ThirdPartyViewModel ThirdParty { get; }
+
     [ObservableProperty] private IReadOnlyList<InfoRow> _rows = [];
+    [ObservableProperty] private int _selectedTabIndex = OverviewTab;
 
     private void BuildRows()
     {
@@ -50,8 +61,8 @@ public sealed partial class AboutViewModel : ViewModelBase
         ];
     }
 
-    [RelayCommand] private void OpenLicense() => _navigate("License");
-    [RelayCommand] private void OpenThirdParty() => _navigate("ThirdParty");
+    [RelayCommand] private void OpenLicense() => SelectedTabIndex = LicenseTab;
+    [RelayCommand] private void OpenThirdParty() => SelectedTabIndex = ThirdPartyTab;
     [RelayCommand] private void OpenUrl(string url) => _services.Ui.OpenUrl(url);
 
     public override void OnLanguageChanged()
@@ -59,6 +70,8 @@ public sealed partial class AboutViewModel : ViewModelBase
         base.OnLanguageChanged();
         BuildRows();
         OnPropertyChanged(nameof(Components));
+        License.OnLanguageChanged();
+        ThirdParty.OnLanguageChanged();
     }
 }
 

@@ -480,6 +480,7 @@ public static partial class LanguageCatalog
             "Zelora Info est un utilitaire Windows gratuit et open source qui réunit la santé des disques (S.M.A.R.T.), le benchmark de disque ainsi que les informations système, écran et mémoire dans une interface moderne.",
             "Zelora Info è un'utilità Windows gratuita e open source che riunisce salute dei dischi (S.M.A.R.T.), benchmark del disco e informazioni su sistema, schermo e memoria in un'unica interfaccia moderna.",
             "Zelora Info es una utilidad de Windows gratuita y de código abierto que combina la salud de los discos (S.M.A.R.T.), el benchmark de disco y la información del sistema, pantalla y memoria en una interfaz moderna."),
+        ["About.Tab.Overview"] = R("Vue d'ensemble", "Panoramica", "Resumen"),
         ["About.Version"] = R("Version", "Versione", "Versión"),
         ["About.Build"] = R("Build", "Build", "Compilación"),
         ["About.Runtime"] = R("Environnement d'exécution", "Runtime", "Entorno de ejecución"),

@@ -418,6 +418,7 @@ public static partial class LanguageCatalog
             "Zelora Info; disk sağlığı (S.M.A.R.T.), disk performans testi, sistem, ekran ve bellek bilgilerini tek bir modern arayüzde birleştiren ücretsiz ve açık kaynak bir Windows aracıdır.",
             "Zelora Info is a free, open-source Windows utility that combines disk health (S.M.A.R.T.), disk benchmarking and system, display and memory information in a single modern interface.",
             "Zelora Info ist ein kostenloses Open-Source-Windows-Tool, das Datenträgerzustand (S.M.A.R.T.), Datenträger-Benchmark sowie System-, Bildschirm- und Speicherinformationen in einer modernen Oberfläche vereint."),
+        ["About.Tab.Overview"] = E("Genel bakış", "Overview", "Übersicht"),
         ["About.Version"] = E("Sürüm", "Version", "Version"),
         ["About.Build"] = E("Derleme", "Build", "Build"),
         ["About.Runtime"] = E("Çalışma zamanı", "Runtime", "Laufzeit"),
